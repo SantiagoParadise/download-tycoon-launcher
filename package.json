@@ -1,0 +1,9 @@
+{
+  "name": "download-tycoon-launcher",
+  "productName": "Download Tycoon Launcher",
+  "version": "2.0.0",
+  "description": "Лаунчер Download Tycoon",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT"
+}

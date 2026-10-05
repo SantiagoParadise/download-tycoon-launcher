@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Download Tycoon — Лаунчер</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-theme="dark">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <div class="launcher">
+    <header class="titlebar">
+      <div class="title-drag">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="tb-title">Download Tycoon — Лаунчер v2</span>
+      </div>
+      <div class="tb-controls">
+        <button class="tb-btn" id="btn-compact" title="Компактный режим">⇱</button>
+        <button class="tb-btn" id="btn-min" title="Свернуть в трей">─</button>
+        <button class="tb-btn tb-close" id="btn-close" title="Закрыть">✕</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="logo-icon">🖥️</div>
+      <div class="logo-text">
+        <h1>Download Tycoon</h1>
+        <p>Симулятор загрузок, обновлений и AI</p>
+      </div>
+      <div class="version" id="local-version">v…</div>
+    </section>
+
+    <nav class="tabs">
+      <div class="tab active" data-tab="home">🏠 Главная</div>
+      <div class="tab" data-tab="backups">💾 Бэкапы</div>
+      <div class="tab" data-tab="updates">🔄 Обновления</div>
+      <div class="tab" data-tab="settings">⚙️ Настройки</div>
+    </nav>
+
+    <main class="content">
+      <!-- ГЛАВНАЯ -->
+      <section class="pane active" data-pane="home">
+        <div class="two-col">
+          <div class="panel">
+            <h2>⚙️ Состояние системы</h2>
+            <div class="status-list" id="status-list">
+              <div class="status-item" data-key="node"><span class="s-ico">⏳</span><span class="s-name">Node.js</span><span class="s-val">…</span></div>
+              <div class="status-item" data-key="files"><span class="s-ico">⏳</span><span class="s-name">Файлы игры</span><span class="s-val">…</span></div>
+              <div class="status-item" data-key="electron"><span class="s-ico">⏳</span><span class="s-name">Electron</span><span class="s-val">…</span></div>
+            </div>
+            <div class="progress-zone" id="dl-progress-zone" hidden>
+              <div class="bar"><i id="dl-progress-bar"></i></div>
+              <div class="sub" id="dl-progress-text">0%</div>
+            </div>
+          </div>
+          <div class="panel">
+            <h2>📜 Журнал</h2>
+            <div class="log" id="log"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- БЭКАПЫ -->
+      <section class="pane" data-pane="backups">
+        <div class="row-actions">
+          <button class="btn acc" id="btn-backup-now">💾 Создать бэкап сейчас</button>
+          <button class="btn" id="btn-open-save">📂 Папка сохранений</button>
+        </div>
+        <div class="backup-list" id="backup-list"></div>
+      </section>
+
+      <!-- ОБНОВЛЕНИЯ -->
+      <section class="pane" data-pane="updates">
+        <div class="panel">
+          <h2>🔄 Обновления игры</h2>
+          <div class="row">
+            <div class="main">
+              <div class="name" id="upd-status">Нажмите «Проверить»</div>
+              <div class="sub" id="upd-sub">Использует GitHub Releases из настроек</div>
+            </div>
+            <div class="right">
+              <button class="btn acc" id="btn-check-update">Проверить</button>
+            </div>
+          </div>
+          <div class="changelog" id="changelog"></div>
+        </div>
+      </section>
+
+      <!-- НАСТРОЙКИ -->
+      <section class="pane" data-pane="settings">
+        <div class="panel">
+          <h2>🎨 Тема</h2>
+          <div class="tabs-inline" id="theme-tabs">
+            <div class="tab-inline active" data-theme-val="dark">🌑 Тёмная</div>
+            <div class="tab-inline" data-theme-val="light">☀️ Светлая</div>
+            <div class="tab-inline" data-theme-val="neon">💜 Неон</div>
+            <div class="tab-inline" data-theme-val="cyber">⚡ Киберпанк</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>🌍 Язык</h2>
+          <div class="tabs-inline">
+            <div class="tab-inline active" data-lang="ru">🇷🇺 Русский</div>
+            <div class="tab-inline" data-lang="en">🇬🇧 English</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>🔧 Поведение</h2>
+          <label class="chk"><input type="checkbox" id="set-autostart" /> Автозапуск лаунчера при входе в Windows</label>
+          <label class="chk"><input type="checkbox" id="set-tray" checked /> Сворачивать в трей при закрытии</label>
+          <label class="chk"><input type="checkbox" id="set-sound" checked /> Звуковые эффекты</label>
+          <label class="chk"><input type="checkbox" id="set-autobackup" checked /> Автобэкап сохранений перед запуском игры</label>
+        </div>
+
+        <div class="panel">
+          <h2>🌐 GitHub-репозиторий ИГРЫ</h2>
+          <input class="fld" id="set-repo" placeholder="например: user/download-tycoon" />
+          <div class="sub" style="margin-top:6px;color:var(--dim);font-size:11px">
+            Для обновлений игровых файлов
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>🚀 GitHub-репозиторий ЛАУНЧЕРА</h2>
+          <input class="fld" id="set-launcher-repo" placeholder="например: user/download-tycoon-launcher" />
+          <div class="sub" style="margin-top:6px;color:var(--dim);font-size:11px">
+            Для само-обновления лаунчера. Оставьте пустым, чтобы отключить.
+          </div>
+          <label class="chk" style="margin-top:10px">
+            <input type="checkbox" id="set-auto-upd-launcher" checked />
+            Проверять обновления лаунчера при запуске
+          </label>
+          <div class="row-actions" style="margin-top:10px">
+            <button class="btn" id="btn-check-launcher">🔍 Проверить обновление лаунчера</button>
+          </div>
+          <div class="sub" id="launcher-upd-result" style="margin-top:8px;font-size:11.5px"></div>
+        </div>
+
+        <div class="panel">
+          <h2>🛠️ Инструменты</h2>
+          <div class="row-actions" style="flex-wrap:wrap">
+            <button class="btn" id="btn-devtools">🛠️ DevTools</button>
+            <button class="btn" id="btn-export-log">📤 Экспорт лога</button>
+            <button class="btn" id="btn-userdata">📂 Папка лаунчера</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="actions">
+      <div class="action-left">
+        <button class="btn btn-ghost" id="btn-folder">📁 Папка игры</button>
+        <button class="btn btn-ghost" id="btn-recheck">🔄 Проверить</button>
+      </div>
+      <div class="action-right">
+        <button class="btn btn-download" id="btn-download-el" hidden>⬇️ Скачать Electron</button>
+        <button class="btn btn-play" id="btn-play" disabled>
+          <span class="play-ico">▶</span> Играть
+        </button>
+      </div>
+    </footer>
+        <div id="launcher-upd-bar" hidden>
+      <div class="lub-info">
+        <span class="lub-ico">⬇️</span>
+        <span class="lub-text" id="lub-text">Обновление лаунчера…</span>
+        <span class="lub-pct" id="lub-pct">0%</span>
+      </div>
+      <div class="lub-track"><div class="lub-fill" id="lub-fill"></div></div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
